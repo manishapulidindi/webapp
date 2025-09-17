@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mini Paddle Game</title>
+  <style>
+    canvas { background:#eee; display:block; margin:20px auto; }
+  </style>
+</head>
+<body>
+<canvas id="c" width="400" height="300"></canvas>
+<script>
+let c=document.getElementById("c"),x=c.getContext("2d");
+let p={x:160,w:80},b={x:200,y:150,dx:2,dy:2,r:8},score=0;
+document.addEventListener("mousemove",e=>p.x=e.offsetX-p.w/2);
+function loop(){
+  x.clearRect(0,0,400,300);
+  // ball
+  x.beginPath();x.arc(b.x,b.y,b.r,0,Math.PI*2);x.fill();
+  // paddle
+  x.fillRect(p.x,280,p.w,10);
+  b.x+=b.dx; b.y+=b.dy;
+  if(b.x<b.r||b.x>400-b.r) b.dx*=-1;
+  if(b.y<b.r) b.dy*=-1;
+  if(b.y>272&&b.x>p.x&&b.x<p.x+p.w){b.dy*=-1;score++;}
+  if(b.y>300){alert("Game Over! Score:"+score);document.location.reload();}
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
